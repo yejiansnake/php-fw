@@ -1,0 +1,45 @@
+<?php
+
+namespace app\modules\api\admin\controllers;
+
+use Yii;
+use yii\web\BadRequestHttpException;
+use app\lib\bl\session\CurUserSession;
+use app\lib\bl\AuthTrait;
+use app\models\admin\AuthUserModel;
+
+abstract class AuthUserPwdController extends BaseController
+{
+    use AuthTrait;
+
+    public function actionLogin()
+    {
+        $data = Yii::$app->request->bodyParams;
+
+        if (empty($data['name'])
+            || empty($data['pwd']))
+        {
+            throw new BadRequestHttpException('params invalid');
+        }
+
+        if (CurUserSession::exist())
+        {
+            CurUserSession::clear();
+        }
+
+        $model = AuthUserModel::auth($data['name'], $data['pwd']);
+
+        if (empty($model))
+        {
+            throw new BadRequestHttpException('user name or password error');
+        }
+
+        $userInfo = $model->toArray();
+        $userInfo['roles'] = [];
+        $userInfo['permissions'] = [];
+
+        $this->resetCurUser($userInfo);
+
+        return $userInfo;
+    }
+}
