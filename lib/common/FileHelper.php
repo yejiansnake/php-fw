@@ -12,7 +12,7 @@ class FileHelper
     private $obj = null;
 
     private static $map = [
-        BaseFile::TYPE_LOCAL => '\app\lib\common\file\BaseFile',
+        BaseFile::TYPE_LOCAL => '\app\lib\common\file\LocalFile',
         BaseFile::TYPE_DB => '\app\lib\common\file\DbFile',
         BaseFile::TYPE_COS => '\app\lib\common\file\CosFile',
     ];
