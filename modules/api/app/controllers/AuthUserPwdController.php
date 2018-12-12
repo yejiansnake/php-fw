@@ -27,7 +27,11 @@ abstract class AuthUserPwdController extends BaseController
             CurUserSession::clear();
         }
 
-        $model = AuthUserModel::auth($data['name'], $data['pwd']);
+        $model = AuthUserModel::getOne([
+            'name' => $data['name'],
+            'pwd' => $data['pwd'],
+            'is_enable' => 1,
+        ]);
 
         if (empty($model))
         {
