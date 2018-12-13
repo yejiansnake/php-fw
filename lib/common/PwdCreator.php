@@ -55,9 +55,9 @@ abstract class PwdCreator
         $algo = self::$algoMap[$type];
 
         $temp = $data;
-        if (empty($key))
+        if (!empty($key))
         {
-            $temp += $key;
+            $temp .= $key;
         }
 
         $pwd = hash($algo, $temp);
