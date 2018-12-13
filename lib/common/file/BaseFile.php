@@ -21,7 +21,7 @@ abstract class BaseFile
     {
         $this->config = self::config($name);
 
-        if (self::$type != $this->config['type'])
+        if (static::$type != $this->config['type'])
         {
             throw new BadRequestHttpException('config invalid');
         }
@@ -44,15 +44,12 @@ abstract class BaseFile
 
         $config = Yii::$app->params['fileMgr'][$name];
 
-        if (is_array($config)
-            && !isset($config['type'])
-            && !isset($config['path'])
-        )
+        if (empty($config['type']) || empty($config['path']))
         {
-            return $config;
+            throw new BadRequestHttpException('config invalid');
         }
 
-        throw new BadRequestHttpException('config invalid');
+        return $config;
     }
 
     public static function decodeBase64Image($content)

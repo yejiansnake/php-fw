@@ -27,7 +27,7 @@ class FileHelper
          }
 
         $class = self::$map[$config['type']];
-        $this->obj = new $class();
+        $this->obj = new $class($name);
     }
 
     public function get(array $params = [])
