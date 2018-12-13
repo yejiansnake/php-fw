@@ -21,13 +21,13 @@ class FileHelper
     {
          $config = BaseFile::config($name);
 
-         if (array_key_exists($config['type'], self::$map))
+         if (!array_key_exists($config['type'], self::$map))
          {
-             $class = self::$map[$config['type']];
-             $this->obj = new $class();
+             throw new ServerErrorHttpException('config invalid');
          }
 
-         throw new ServerErrorHttpException('config invalid');
+        $class = self::$map[$config['type']];
+        $this->obj = new $class();
     }
 
     public function get(array $params = [])
