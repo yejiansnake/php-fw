@@ -16,10 +16,11 @@ class Guid
 		{
 			$extra = '';
 		}
-		
-        $info = 'class_app\\lib\\common';
-        $uid = uniqid(time() . '' . rand(), true);
-        $res = strtoupper(md5($uid . $info . $extra));
+
+        $uid = uniqid('', true);
+        $str = __FILE__ . microtime() . mt_rand() . $uid . $extra;
+        $sha1 = sha1($str);
+        $res = strtoupper($sha1);
         return $res;
     }
 	
@@ -30,14 +31,14 @@ class Guid
             $add = '';
         }
 
-        $extra = 'getStringWeb' . $add;
-        $extra .= empty($_SERVER['HTTP_HOST']) ? '' : $_SERVER['HTTP_HOST'];
-        $extra .= empty($_SERVER['REQUEST_TIME']) ? '' : $_SERVER['REQUEST_TIME'];
-        $extra .= empty($_SERVER['HTTP_USER_AGENT']) ? '' : $_SERVER['HTTP_USER_AGENT'];
-        $extra .= empty($_SERVER['SERVER_ADDR']) ? '' : $_SERVER['SERVER_ADDR'];
-        $extra .= empty($_SERVER['SERVER_PORT']) ? '' : $_SERVER['SERVER_PORT'];
-        $extra .= empty($_SERVER['REMOTE_ADDR']) ? '' : $_SERVER['REMOTE_ADDR'];
-        $extra .= empty($_SERVER['REMOTE_PORT']) ? '' : $_SERVER['REMOTE_PORT'];
-		return self::toString($extra);
+        $extra = session_id() . $add;
+        $extra .= empty($_SERVER['HTTP_HOST']) ? '' . mt_rand() : $_SERVER['HTTP_HOST'];
+        $extra .= empty($_SERVER['REQUEST_TIME']) ? '' . mt_rand() : $_SERVER['REQUEST_TIME'];
+        $extra .= empty($_SERVER['HTTP_USER_AGENT']) ? '' . mt_rand() : $_SERVER['HTTP_USER_AGENT'];
+        $extra .= empty($_SERVER['SERVER_ADDR']) ? '' . mt_rand() : $_SERVER['SERVER_ADDR'];
+        $extra .= empty($_SERVER['SERVER_PORT']) ? '' . mt_rand() : $_SERVER['SERVER_PORT'];
+        $extra .= empty($_SERVER['REMOTE_ADDR']) ? '' . mt_rand() : $_SERVER['REMOTE_ADDR'];
+        $extra .= empty($_SERVER['REMOTE_PORT']) ? '' . mt_rand() : $_SERVER['REMOTE_PORT'];
+        return self::toString($extra);
 	}
 }
