@@ -9,10 +9,9 @@ use yii\web\ServerErrorHttpException;
 
 abstract class SysPropsModel extends BaseModel
 {
-    protected static $isNoDelete = true;
     protected static $fillFields = ['created_at', 'updated_at', 'created_by', 'updated_by'];
 
-    protected static $whereFields = ['type', 'id', 'pid'];
+    protected static $whereFields = ['id', 'type', 'tid', 'pid'];
 
     protected static $jsonFields = ['value7'];
 
@@ -30,9 +29,9 @@ abstract class SysPropsModel extends BaseModel
     public function rules()
     {
         return [
-            [['type', 'id', 'name'], 'required'],
-            [['type', 'id', 'pid', 'value1', 'value2', 'value4', 'value5', 'created_by', 'updated_by'], 'integer'],
-            [['value8', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['type', 'tid', 'name'], 'required'],
+            [['id', 'type', 'tid', 'pid', 'value1', 'value2', 'value4', 'value5', 'created_by', 'updated_by'], 'integer'],
+            [['value8', 'created_at', 'updated_at'], 'safe'],
             [['value3'], 'double'],
             [['name'], 'string', 'max' => 100],
             [['desc'], 'string', 'max' => 1000],
@@ -42,12 +41,12 @@ abstract class SysPropsModel extends BaseModel
 
     public static function setProp(array $params)
     {
-        if (empty($params) || empty($params['type']) || empty($params['id']))
+        if (empty($params) || empty($params['type']) || empty($params['tid']))
         {
             throw new BadRequestHttpException('params invalid');
         }
 
-        $model = self::getOne(['type' => $params['type'], 'id' => $params['id']]);
+        $model = self::getOne(['type' => $params['type'], 'tid' => $params['tid']]);
 
         if (empty($model))
         {
@@ -66,9 +65,9 @@ abstract class SysPropsModel extends BaseModel
                 unset($params['type']);
             }
 
-            if (isset($params['id']))
+            if (isset($params['tid']))
             {
-                unset($params['id']);
+                unset($params['tid']);
             }
 
             if (isset($params['name']) && empty($params['name']))
@@ -90,9 +89,14 @@ abstract class SysPropsModel extends BaseModel
         return $model;
     }
 
-    public static function getProp($type, $id)
+    public static function getProp($type, $tid)
     {
-        return self::getOne(['type' => $type, 'id' => $id]);
+        return self::getOne(['type' => $type, 'tid' => $tid]);
+    }
+
+    public static function getProps($type)
+    {
+        return self::get(['type' => $type]);
     }
 
     public static function getPropByPid($type, $pid)

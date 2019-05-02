@@ -17,6 +17,8 @@ class AppEvent extends BaseAppEvent
     const TYPE_WX_APP_ID = 2;
 
     private static $config = [
+        'app' => self::TYPE_MODULE_AND_KEY_NAME,
+        'mgr' => self::TYPE_MODULE_AND_KEY_NAME,
     ];
 
     //初始化额外的数据库全局对象
@@ -34,7 +36,6 @@ class AppEvent extends BaseAppEvent
         }
 
         $keyName = self::getCompanyKeyName();
-
         if (!empty($keyName))
         {
             Yii::$app->set('db_client', CompanyModel::getCompanyDbObject($keyName));
@@ -66,8 +67,7 @@ class AppEvent extends BaseAppEvent
     private static function initCompanyForKeyName($prefixLength = 0)
     {
         $subSysName = LoadMgr::$subSysName;
-
-        IF ($prefixLength > 0)
+        if ($prefixLength > 0)
         {
             if (strlen(LoadMgr::$subSysName) < $prefixLength + 1)
             {

@@ -14,6 +14,8 @@ use Yii;
 use app\lib\bl\wechat\login\WeChatLogin;
 use app\lib\bl\wechat\login\CorpWeChatLogin;
 use app\lib\bl\wechat\login\CorpWeChatWebLogin;
+use app\lib\bl\wechat\login\CompanyCorpWeChatLogin;
+use app\lib\bl\wechat\login\CompanyCorpWeChatWebLogin;
 
 class WechatController extends BaseController
 {
@@ -29,9 +31,21 @@ class WechatController extends BaseController
         return $this->redirect(CorpWeChatLogin::handleAuthRes());
     }
 
-    //CorpWeb:企业微信WEB扫码
+    //CorpWeb:企业微信WEB扫码(后台)
     public function actionCorpWebAuthRes()
     {
         return $this->redirect(CorpWeChatWebLogin::handleAuthRes());
+    }
+
+    //CompanyCorp:客户企业微信扫码
+    public function actionCompanyCorpAuthRes()
+    {
+        return $this->redirect(CompanyCorpWeChatLogin::handleAuthRes());
+    }
+
+    //CompanyCorpWeb:客户企业微信WEB扫码(后台)
+    public function actionCompanyCorpWebAuthRes()
+    {
+        return $this->redirect(CompanyCorpWeChatWebLogin::handleAuthRes());
     }
 }

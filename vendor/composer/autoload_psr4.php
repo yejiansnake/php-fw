@@ -18,4 +18,7 @@ return array(
     'PhpAmqpLib\\' => array($vendorDir . '/php-amqplib/php-amqplib/PhpAmqpLib'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
     'Egulias\\EmailValidator\\' => array($vendorDir . '/egulias/email-validator/EmailValidator'),
+    'Qcloud\\' => array($vendorDir . '/tengxunyun/src/Qcloud'),
+    'Guzzle\\' => array($vendorDir . '/tengxunyun/src/Guzzle'),
+    'Symfony\\' => array($vendorDir . '/tengxunyun/src/Symfony'),
 );

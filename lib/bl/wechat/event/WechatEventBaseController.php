@@ -5,6 +5,7 @@
 
 namespace app\lib\bl\wechat\event;
 
+use app\lib\common\LogHelper;
 use Yii;
 use app\lib\common\controller\EventBaseController;
 use app\lib\bl\LogMgr;
@@ -149,7 +150,7 @@ class WechatEventBaseController extends EventBaseController
 
             if (!empty($msg))
             {
-                if (LogMgr::isLog('event', LogMgr::LEVEL_DEBUG))
+                if (LogHelper::isLog('event', LogMgr::LEVEL_DEBUG))
                 {
                     LogMgr::event(__METHOD__, LogMgr::LEVEL_DEBUG,
                         "msg content:" . json_encode($msg, JSON_UNESCAPED_UNICODE));

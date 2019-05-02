@@ -2,7 +2,6 @@
 
 namespace app\lib\common\file;
 
-use yii\web\ServerErrorHttpException;
 use yii\web\BadRequestHttpException;
 use app\lib\vendor\QCloud\CosClient;
 
@@ -12,10 +11,7 @@ class CosFile extends BaseFile
 
     protected function init()
     {
-        if (!array_key_exists($this->path, CosClient::$buckets))
-        {
-            throw new ServerErrorHttpException('path invalid');
-        }
+
     }
 
     public function get(array $params = [])
@@ -50,7 +46,7 @@ class CosFile extends BaseFile
 
         $res = CosClient::uploadObject([
             'bucket' => $this->path,
-            'key' => $params[''],
+            'key' => $params['key'],
             'data' => $params['data'],
         ]);
 
@@ -82,3 +78,6 @@ class CosFile extends BaseFile
         return empty($res['RequestId']) ? false : true;
     }
 }
+
+
+

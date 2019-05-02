@@ -56,12 +56,23 @@ abstract class ApiBaseController extends BaseApiController
         self::initCurUser($userInfo);
     }
 
-    final private function initCurUser($curUserSession)
+    final private function initCurUser(&$curUserSession)
     {
         $this->curUser = $curUserSession;
         $this->curUserID = $this->curUser['id'];
+        $this->afterInitCurUser($curUserSession);
+    }
 
-        self::afterInitCurUser($this->curUser);
+    protected function getCurUser()
+    {
+        $session = BaseCurUserSession::get();
+
+        if (empty($session))
+        {
+            return null;
+        }
+
+        return $session;
     }
 
 	public function __construct($id, $module, $config = [])

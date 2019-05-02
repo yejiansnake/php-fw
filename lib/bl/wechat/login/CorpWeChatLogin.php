@@ -4,12 +4,12 @@ namespace app\lib\bl\wechat\login;
 
 use Yii;
 use yii\web\BadRequestHttpException;
+use yii\web\UnauthorizedHttpException;
 use app\lib\bl\CachedMgr;
 use app\lib\bl\wechat\CorpWeChatHelper;
 use app\lib\bl\LogMgr;
 use app\lib\common\HttpHelper;
 use app\lib\vendor\wechat\CorpWeChatWeb;
-use yii\web\UnauthorizedHttpException;
 
 class CorpWeChatLogin extends BaseLogin
 {
@@ -29,18 +29,17 @@ class CorpWeChatLogin extends BaseLogin
         $config = self::getConfig();
 
         $host = $config['authHost'];
-        $scopeType = empty($config['scope']) ? CorpWeChatWeb::SCOPE_TYPE_SNSAPI_USERINFO : $config['scope'];
 
         $key = self::createPreCacheKey();
         CachedMgr::set($key, [
-            'scopeType' => $scopeType,
             'url' => $params['url'],
         ], self::$expireTime);
 
         $weChatWeb = CorpWeChatHelper::createWeb();
 
         return [
-            'url' => $weChatWeb->getAuthorizeUrl("{$host}/{$authResRoute}", $key, $scopeType),
+            'url' => $weChatWeb->getAuthorizeUrl("{$host}/{$authResRoute}", $key,
+                CorpWeChatWeb::SCOPE_TYPE_SNSAPI_USERINFO),
         ];
     }
 
@@ -67,7 +66,6 @@ class CorpWeChatLogin extends BaseLogin
 
         $key = self::createLoginCacheKey();
         CachedMgr::set($key, [
-            'scopeType' => $info['scopeType'],
             'code' => $params['code'],
         ], self::$expireTime);
 

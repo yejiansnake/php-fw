@@ -592,7 +592,7 @@ abstract class BaseModel extends ActiveRecord
     {
         if (static::$isNoDelete)
         {
-            $this->deletad_at = DateTimeEx::getString();
+            $this->deleted_at = DateTimeEx::getString();
 
             if (!$this->save())
             {
@@ -744,8 +744,7 @@ abstract class BaseModel extends ActiveRecord
                     $getParams[$field] = $data[$field];
                 }
             }
-
-            if ($getParams == count($keyFields))
+            if (count($getParams) == count($keyFields))
             {
                 $checkExist = true;
             }
@@ -780,9 +779,9 @@ abstract class BaseModel extends ActiveRecord
         $model->load($data);
         if (!$model->save())
         {
-            LogHelper::common(__METHOD__, LogHelper::LEVEL_ERROR,
-                'save user failed:' . $model->getErrorString());
-            throw new ServerErrorHttpException('save user failed:');
+            $msg = "save user failed, msg:{$model->getErrorString()}";
+            LogHelper::common(__METHOD__, LogHelper::LEVEL_ERROR, $msg);
+            throw new ServerErrorHttpException($msg);
         }
 
         return $model;

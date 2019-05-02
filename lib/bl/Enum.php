@@ -48,11 +48,16 @@ class Enum extends EnumHelper
     //Client 系统属性表
 
     const CLIENT_PM_TYPE_BASE = 1;
-    const CLIENT_PM_TYPE_BASE_ID_WECHAT_SHARE = 11;   //wx share
+    const CLIENT_PM_TYPE_BASE_ID_WECHAT_SHARE = 1;   //wx share
+    const CLIENT_PM_TYPE_BASE_ID_WECHAT_AUTHORIZE = 2;   //wx authorize
+
 
     const CLIENT_PM_TYPE_SETTING = 2;
 
+
     //------------------------------------------------------------------------------------------
+
+
     //方法
 
     public static function get()

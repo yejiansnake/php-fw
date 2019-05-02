@@ -96,7 +96,7 @@ class LoadMgr
         if (empty(self::$curRoute)
             || empty(self::$curRoute['module']))
         {
-            if (YII_DEBUG) exit('无效模块');
+            if (YII_DEBUG) exit("无效模块：{$domain}");
             return false;
         }
 

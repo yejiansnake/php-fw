@@ -1,34 +1,42 @@
 <?php
-/**
- * 权限信息
- * User: yejian
- * Date: 2016/2/25
- * Time: 17:49
- */
 
 namespace app\lib\bl;
 
 class Permission
 {
     //----------------------------------------------------------------------------------------
-    //权限
+    //admin
 
-    const MGR_PMT_USER = 1;
-    const MGR_PM_USER_VIEW = 101;
+    const ADMIN_PM_USER_VIEW = 1;
+    const ADMIN_PM_USER = 2;
+    const ADMIN_PM_ROLE = 3;
+
+    public static $ADMIN_DATA = [
+        [
+            'id' => self::ADMIN_PM_USER_VIEW,
+            'name' => '用户查看',
+        ],
+        [
+            'id' => self::ADMIN_PM_USER,
+            'name' => '用户管理',
+        ],
+        [
+            'id' => self::ADMIN_PM_ROLE,
+            'name' => '角色管理',
+        ],
+    ];
 
     //----------------------------------------------------------------------------------------
-    //MGR 数据
+    //mgr
+
+    const MGR_PM_USER = 1;
 
     public static $MGR_DATA = [
         [
-            'id' => self::MGR_PMT_USER,
+            'id' => self::MGR_PM_USER,
             'name' => '用户管理',
-            'items' => [
-                [
-                    'id' => self::MGR_PM_USER_VIEW,
-                    'name' => '用户查看',
-                ],
-            ],
         ],
     ];
+
+
 }

@@ -17,6 +17,9 @@ class BaseModule extends Module
             'app' => [
                 'class' => 'app\modules\api\app\BaseModule',
             ],
+            'mgr' => [
+                'class' => 'app\modules\api\mgr\BaseModule',
+            ],
         ];
     }
 }

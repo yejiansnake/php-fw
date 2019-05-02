@@ -10,7 +10,7 @@ use app\lib\bl\CachedMgr;
 use app\lib\bl\wechat\CorpWeChatHelper;
 use yii\web\UnauthorizedHttpException;
 
-class CorpWeChatWebLogin  extends BaseLogin
+class CorpWeChatWebLogin extends BaseLogin
 {
     protected static $configKey = 'corpWeChat';
     protected static $cacheKeyPrefix = 'CWCWL';

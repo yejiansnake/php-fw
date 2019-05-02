@@ -62,7 +62,7 @@ abstract class LogHelper
         return self::$config;
     }
 
-    private static function isLog($type, $level)
+    public static function isLog($type, $level)
     {
         $configLevel = self::getConfigLevel($type);
 

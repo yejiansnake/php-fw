@@ -5,7 +5,7 @@ namespace app\modules\api\app\controllers;
 use Yii;
 use yii\web\BadRequestHttpException;
 
-class AuthController extends AuthCorpWeChatController
+class AuthController extends AuthCompanyCorpWeChatController
 {
     public function actionLogin()
     {
