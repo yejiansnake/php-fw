@@ -10,5 +10,6 @@ use app\lib\common\controller\ApiBaseController;
 
 abstract class BaseController extends ApiBaseController
 {
-
+    protected static $sysLogCallModelName = 'app\models\admin\SysLogAdminCallModel';
+    protected static $sysLogErrorModelName = 'app\models\admin\SysLogAdminErrorModel';
 }

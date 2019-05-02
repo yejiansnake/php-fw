@@ -2,50 +2,40 @@
 
 namespace app\modules\api\admin\controllers;
 
-
+use app\lib\bl\wechat\CorpWeChatHelper;
 use app\models\admin\CorpAuthUserModel;
-use app\models\client\CorpUserModel;
 use Yii;
 use yii\web\BadRequestHttpException;
-use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
 
 class CorpAuthUserController extends BaseController
 {
     protected static $apiModelName = 'app\models\admin\CorpAuthUserModel';
-    protected static $apiModelOptions = ['index', 'update'];    //API支持的基础接口
+    protected static $apiModelOptions = ['index', 'update', 'view'];    //API支持的基础接口
 
-
-    /**
-     * @return array|mixed
-     * @throws BadRequestHttpException
-     * @throws NotFoundHttpException
-     * @throws \yii\web\ServerErrorHttpException
-     */
     public function actionCreate()
     {
         $params = Yii::$app->request->bodyParams;
-        if (empty($params['id']))
+
+        if (empty($params['wx_id']))
         {
             throw new BadRequestHttpException('params invalid');
         }
 
-        $models = CorpUserModel::get(['id' => $params['id']]);
-        if (empty($models))
+        $weChatHelper = CorpWeChatHelper::create();
+
+        $userInfo = $weChatHelper->getUser($params['wx_id']);
+
+        if (!empty($userInfo['errcode']))
         {
-            throw new NotFoundHttpException('not found user');
+            throw new ServerErrorHttpException("获取用户失败, 消息:{$userInfo['errmsg']}");
         }
 
-        foreach ($models as $model)
-        {
-            $userInfo = [
-                'wx_id' => $model->wx_id,
-                'code' => $model->code,
-                'name' => $model->name,
-                'en_name' => $model->en_name
-            ];
-            CorpAuthUserModel::saveOne($userInfo);
-        }
+        $model = CorpAuthUserModel::saveOne([
+            'wx_id' => $userInfo['userid'],
+            'name' => $userInfo['name'],
+        ]);
 
-        return ['msg' => 'ok'];
+        return $model;
     }
 }

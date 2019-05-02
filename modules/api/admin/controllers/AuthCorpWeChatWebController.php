@@ -20,7 +20,6 @@ abstract class AuthCorpWeChatWebController extends BaseController
     public function actionLogin()
     {
         $userInfo = CorpWeChatWebLogin::handleLogin();
-//        CorpAuthUserModel::saveOneFromApi($userInfo);
         $model = CorpAuthUserModel::getOne(['wx_id' => $userInfo['userid'], 'is_enable' => 1]);
         if (empty($model))
         {
